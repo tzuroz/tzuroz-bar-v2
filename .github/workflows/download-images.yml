@@ -1,8 +1,18 @@
 name: Download cocktail images
 
-# Run by hand: Actions tab -> "Download cocktail images" -> "Run workflow".
+# Runs by itself whenever cocktail_list1.json is changed on main
+# (e.g. after exporting a new version from the spreadsheet), or by hand:
+# Actions tab -> "Download cocktail images" -> "Run workflow".
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - cocktail_list1.json
+
+concurrency:
+  group: download-images
+  cancel-in-progress: false
 
 permissions:
   contents: write

@@ -22,20 +22,25 @@ A small cocktail recipe site with 64 cocktails, from the classics to a few house
 | `images/` | Cocktail photos stored with the site |
 | `tools/download_images.py` | Downloads photos that are still web links into `images/` |
 
-## Adding a cocktail
+## Adding or changing a cocktail
 
-Copy an existing entry in `cocktail_list1.json`, change the name, category, method and image, and fill in amounts for the ingredients it uses. A new category or ingredient shows up in the menus automatically.
+The recipes are kept in a spreadsheet (`cocktail_list1-v2.xlsx`, not stored in this repo) and exported to `cocktail_list1.json`:
+
+1. Add a row, or change a value, in the spreadsheet. Put the photo's **web link** in the `Image` column, as before.
+2. Export it to `cocktail_list1.json`, the same way as before.
+3. Upload `cocktail_list1.json` to this repo, replacing the old one.
+
+A new category or ingredient column shows up in the site's menus automatically. Keep the column names the same as in the spreadsheet: they are what the site displays.
+
+After step 3, the **Download cocktail images** Action runs by itself. It downloads any new or changed photos into `images/`, reuses the ones it already has, and commits the result. The site updates a minute or two later.
 
 ## Photos
 
-Photos live in `images/`, named after the cocktail (e.g. `images/negroni.jpg`). The original web address of each downloaded photo is kept in its `Image Source` field and shown as a credit under the picture.
+Photos live in `images/`, named after the cocktail (e.g. `images/negroni.jpg`). `images/sources.json` records which web link each photo came from, and the site shows that link as a credit under the picture.
 
-To download any photos that are still web links, either:
+The download runs automatically when `cocktail_list1.json` changes. To run it by hand: on GitHub, go to **Actions → Download cocktail images → Run workflow**, or on your computer run `python3 tools/download_images.py`, then commit and push.
 
-- On GitHub: **Actions → Download cocktail images → Run workflow**. It downloads the photos and commits them for you.
-- Or on your computer: `python3 tools/download_images.py`, then commit and push.
-
-Photos that can't be downloaded keep their web link, so nothing breaks. It's safe to run again.
+Photos that can't be downloaded keep their web link, so nothing breaks. Changing a cocktail's link downloads the new photo; renaming or deleting a cocktail removes its old photo.
 
 ## Running it locally
 
