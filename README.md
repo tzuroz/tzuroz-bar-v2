@@ -9,6 +9,7 @@ A small cocktail recipe site with 64 cocktails, from the classics to a few house
 - **Search by ingredient**: see every cocktail that uses an ingredient, with the amount.
 - **🎲 Surprise me**: opens a random cocktail.
 - **🍾 What can I make?**: tick the bottles and ingredients you have, and see which cocktails you can make (plus the ones you're just one ingredient away from). Your choices are remembered on your device.
+- **Background music**: a speaker button in the bottom-right corner plays or mutes music. It's remembered on each visitor's device.
 - **Shareable links**: each cocktail has its own link, e.g. `index.html#negroni`. Use the "Copy link" button on the card.
 
 ## Files
@@ -31,6 +32,12 @@ The recipes are kept in a spreadsheet (`cocktail_list1-v2.xlsx`, not stored in t
 A new category or ingredient column shows up in the site's menus automatically. Column names are what the site displays, so keep them the same as in the spreadsheet. Use plain English letters only (no accents such as c-cedilla or tilde).
 
 Photos are shown straight from their web links, with a small "Photo: website" credit underneath. If a link stops working, the photo is simply hidden; replace the link in the spreadsheet to fix it.
+
+## Background music
+
+Add an MP3 file to the repo at `music/background.mp3` (on GitHub: **Add file -> Upload files**, and type `music/` before the file name, or create a `music` folder first). The speaker button appears once the file is there; without it, the button stays hidden.
+
+Browsers don't let sites play sound by themselves, so music starts when the visitor clicks the speaker button. It plays on a loop at a low volume (change `MUSIC_VOLUME` in `script.js`, from 0 to 1). Use music you're allowed to share, for example tracks from Pixabay Music or the YouTube Audio Library. Keep the file small (a few MB) so the site stays quick.
 
 ## Running it locally
 

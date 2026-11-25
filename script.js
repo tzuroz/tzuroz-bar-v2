@@ -1,6 +1,8 @@
 // Fields in each cocktail that are not ingredients.
 const NON_INGREDIENT_FIELDS = ["Cocktail Name", "Category", "Method", "Image"];
 const BAR_STORAGE_KEY = "tzuroz-bar:my-bar";
+const MUSIC_STORAGE_KEY = "tzuroz-bar:music-on";
+const MUSIC_VOLUME = 0.3;
 
 let allCocktails = [];
 let drinkSelectCategory = null; // which category the cocktail dropdown currently lists
@@ -340,4 +342,69 @@ function renderBarResults(bar) {
   const missingByName = new Map(missingOne.map(m => [m.cocktail, m.missing]));
   renderResultList($("missingOneList"), missingOne.map(m => m.cocktail), "None.",
     c => ` - needs <strong>${escapeHtml(missingByName.get(c))}</strong>`);
+}
+
+/* ---------- Background music ---------- */
+
+setUpMusic();
+
+function setUpMusic() {
+  const audio = $("bgMusic");
+  const button = $("musicBtn");
+  audio.volume = MUSIC_VOLUME;
+
+  const remember = on => {
+    try {
+      localStorage.setItem(MUSIC_STORAGE_KEY, on ? "1" : "0");
+    } catch {
+      // Storage unavailable; the button still works for this visit.
+    }
+  };
+  const wantsMusic = () => {
+    try {
+      return localStorage.getItem(MUSIC_STORAGE_KEY) === "1";
+    } catch {
+      return false;
+    }
+  };
+
+  const showState = on => {
+    button.classList.toggle("on", on);
+    button.setAttribute("aria-pressed", String(on));
+    button.setAttribute("aria-label", on ? "Mute background music" : "Play background music");
+    button.title = on ? "Mute music" : "Play music";
+  };
+
+  const play = () => audio.play().then(() => showState(true), () => showState(false));
+
+  button.addEventListener("click", () => {
+    if (audio.paused) {
+      remember(true);
+      play();
+    } else {
+      audio.pause();
+      remember(false);
+      showState(false);
+    }
+  });
+
+  // Only show the button if a music file has been added.
+  fetch(audio.getAttribute("src"), { method: "HEAD" })
+    .then(response => {
+      if (!response.ok) return;
+      button.hidden = false;
+      showState(false);
+
+      // Browsers block sound until the visitor interacts with the page, so if
+      // they turned music on last time, resume it on their first click or key press.
+      if (wantsMusic()) {
+        const resume = event => {
+          if (event.target.closest && event.target.closest("#musicBtn")) return;
+          if (audio.paused) play();
+        };
+        document.addEventListener("pointerdown", resume, { once: true });
+        document.addEventListener("keydown", resume, { once: true });
+      }
+    })
+    .catch(() => {});
 }

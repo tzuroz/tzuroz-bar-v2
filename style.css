@@ -294,9 +294,54 @@ summary:focus-visible {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* ---------- Music button ---------- */
+
+.music-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border: 2px solid var(--surface-3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.music-btn svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+}
+
+.music-btn .icon-on,
+.music-btn.on .icon-off {
+  display: none;
+}
+
+.music-btn.on .icon-on {
+  display: block;
+}
+
+.music-btn.on {
+  color: #000000;
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
 @media screen and (max-width: 600px) {
   .app {
-    padding: 16px;
+    padding: 16px 16px 88px;
+  }
+
+  .music-btn {
+    right: 16px;
+    bottom: 16px;
   }
 
   .card {

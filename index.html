@@ -63,6 +63,13 @@
     </div>
   </div>
 
+  <!-- Background music: put your track at music/background.mp3 -->
+  <audio id="bgMusic" src="music/background.mp3" loop preload="none"></audio>
+  <button type="button" id="musicBtn" class="music-btn" aria-label="Play background music" aria-pressed="false" title="Play music" hidden>
+    <svg class="icon-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 8.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <svg class="icon-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+
   <script src="script.js"></script>
 </body>
 </html>
