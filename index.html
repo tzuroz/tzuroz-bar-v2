@@ -1,32 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="https://cdn.glitch.global/61b94003-abf9-4fe0-a946-23ddf7007087/android-chrome-512x512.png?v=1742921062133">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tzuroz's Bar</title>
+  <meta name="description" content="Cocktail recipes from Tzuroz's Bar: browse by category, search by name or ingredient, and find out what you can make with the bottles you have." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍸</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&display=swap" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app">
     <h1>🍸 Tzuroz's Bar</h1>
 
-    <label for="categorySelect">Choose a category:</label>
-    <select id="categorySelect"></select>
+    <p id="loadError" class="error" hidden>
+      Sorry, the cocktail list couldn't be loaded. Please refresh the page to try again.
+    </p>
 
-    <label for="drinkSelect">Choose a cocktail:</label>
-    <select id="drinkSelect"></select>
-    
-    <label for="ingredientSelect">Search by Ingredient:</label>
-    <select id="ingredientSelect">
-      <option value="">-- Select an ingredient --</option>
-    </select>
-    <div id="ingredientResults"></div>
+    <section class="controls">
+      <div class="search-row">
+        <div class="field grow">
+          <label for="nameSearch">Search by name:</label>
+          <input type="search" id="nameSearch" placeholder="e.g. Negroni" autocomplete="off" />
+        </div>
+        <button type="button" id="randomBtn">🎲 Surprise me</button>
+      </div>
+      <div id="nameResults" class="results"></div>
 
+      <div class="field">
+        <label for="categorySelect">Choose a category:</label>
+        <select id="categorySelect"></select>
+      </div>
 
+      <div class="field">
+        <label for="drinkSelect">Choose a cocktail:</label>
+        <select id="drinkSelect"></select>
+      </div>
+
+      <div class="field">
+        <label for="ingredientSelect">Search by ingredient:</label>
+        <select id="ingredientSelect">
+          <option value="">-- Select an ingredient --</option>
+        </select>
+      </div>
+      <div id="ingredientResults" class="results"></div>
+
+      <details id="barPanel" class="bar-panel">
+        <summary>🍾 What can I make?</summary>
+        <p class="hint">Tick what you have at home. Your choices are remembered on this device.</p>
+        <div class="bar-actions">
+          <button type="button" id="clearBar">Clear all</button>
+        </div>
+        <div id="barChecklist" class="checklist"></div>
+        <div id="barResults"></div>
+      </details>
+    </section>
 
     <div id="cocktailDisplay" class="card">
-  <!-- Cocktail info will be injected here via JS -->
+      <!-- Cocktail info is injected here by script.js -->
     </div>
   </div>
 

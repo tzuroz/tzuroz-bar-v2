@@ -1,48 +1,35 @@
-# Hello website!
+# 🍸 Tzuroz's Bar
 
-This is a basic HTML starter project you can build on however you like. No need to save. While you develop your site, your changes will happen ✨ immediately in the preview window. On the left you'll see the files that make up your site, including HTML, JavaScript, and CSS. You can upload assets like images or audio in `assets`. The rest is up to you and your imagination. 🦄
+A small cocktail recipe site with 64 cocktails, from the classics to a few house favourites.
 
-_Last updated: 28 Feb 2023_
+## Features
 
-## What's in this project?
+- **Browse by category**: pick a category, then a cocktail.
+- **Search by name**: type part of a name; press Enter to open the first match.
+- **Search by ingredient**: see every cocktail that uses an ingredient, with the amount.
+- **🎲 Surprise me**: opens a random cocktail.
+- **🍾 What can I make?**: tick the bottles and ingredients you have, and see which cocktails you can make (plus the ones you're just one ingredient away from). Your choices are remembered on your device.
+- **Shareable links**: each cocktail has its own link, e.g. `index.html#negroni`. Use the "Copy link" button on the card.
 
-← `README.md`: That's this file, where you can tell people what your cool website does and how you built it.
+## Files
 
-← `index.html`: This is the main web page for your site. The HTML defines the structure and content of the page using _elements_. You'll see references in the HTML to the JS and CSS files. Try clicking the image in the center of the page!
+| File | What it is |
+| --- | --- |
+| `index.html` | Page structure |
+| `script.js` | Loads the recipes and powers all the features |
+| `style.css` | Styling |
+| `cocktail_list1.json` | The recipes. Each cocktail has a name, category, method, image URL, and one field per ingredient (empty if not used) |
 
-← `style.css`: CSS files add styling rules to your content. The CSS applies styles to the elements in your HTML page. The style rules also make the image move when you click it.
+## Adding a cocktail
 
-← `script.js`: If you're feeling fancy you can add interactivity to your site with JavaScript. The code in the JavaScript file runs when the page loads, and when the visitor clicks the button you can add using the code in the TODO.
+Copy an existing entry in `cocktail_list1.json`, change the name, category, method and image, and fill in amounts for the ingredients it uses. A new category or ingredient shows up in the menus automatically.
 
-Open each file and check out the comments (in gray) for more info.
+## Running it locally
 
-## Try this next 🏗️
+The page loads the JSON with `fetch`, so open it through a web server rather than double-clicking the file:
 
-Take a look in `TODO.md` for next steps you can try out in your new site!
-
-___Want a minimal version of this project to build your own website? Check out [Blank Website](https://glitch.com/edit/#!/remix/glitch-blank-website)!___
-
-## Ready to share your site?
-
-Add these meta tags for SEO and social sharing between your page `<head></head>` tags, changing the values for your site:
-
-```
-<link rel="canonical" href="https://glitch-hello-website.glitch.me/" />
-<meta name="description" content="A simple website, built with Glitch. Remix it to get your own."/>
-<meta name="robots" content="index,follow" />
-<meta property="og:title" content="Hello World!" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://glitch-hello-website.glitch.me/" />
-<meta property="og:description" content="A simple website, built with Glitch. Remix it to get your own."/>
-<meta property="og:image" content="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2Fhello-website-social.png?v=1616712748147"/>
-<meta name="twitter:card" content="summary" />
+```bash
+python3 -m http.server 8000
 ```
 
-![Glitch](https://cdn.glitch.com/a9975ea6-8949-4bab-addb-8a95021dc2da%2FLogo_Color.svg?v=1602781328576)
-
-## You built this with Glitch!
-
-[Glitch](https://glitch.com) is a friendly community where millions of people come together to build web apps and websites.
-
-- Need more help? [Check out our Help Center](https://help.glitch.com/) for answers to any common questions.
-- Ready to make it official? [Become a paid Glitch member](https://glitch.com/pricing) to boost your app with private sharing, more storage and memory, domains and more.
+Then visit http://localhost:8000.
