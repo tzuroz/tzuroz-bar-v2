@@ -266,6 +266,21 @@ summary:focus-visible {
   margin-top: 10px;
 }
 
+.photo {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.photo figcaption {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.photo figcaption a {
+  color: var(--text-muted);
+}
+
 .card img.cocktail-image {
   display: block;
   max-width: min(600px, 100%);

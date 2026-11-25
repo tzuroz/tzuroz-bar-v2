@@ -1,5 +1,5 @@
 // Fields in each cocktail that are not ingredients.
-const NON_INGREDIENT_FIELDS = ["Cocktail Name", "Category", "Method", "Image"];
+const NON_INGREDIENT_FIELDS = ["Cocktail Name", "Category", "Method", "Image", "Image Source"];
 const BAR_STORAGE_KEY = "tzuroz-bar:my-bar";
 
 let allCocktails = [];
@@ -64,7 +64,7 @@ function allIngredientNames() {
 function slugify(name) {
   return name
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .replace(/['’]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
@@ -120,15 +120,29 @@ function renderCard(cocktail) {
 
       <button type="button" class="share-btn" id="shareBtn">🔗 Copy link to this cocktail</button>
     </div>
-    ${hasValue(cocktail.Image)
-      ? `<img src="${escapeHtml(cocktail.Image)}" alt="${escapeHtml(name)}" class="cocktail-image" loading="lazy" />`
-      : ""}
+    ${hasValue(cocktail.Image) ? `
+      <figure class="photo">
+        <img src="${escapeHtml(cocktail.Image)}" alt="${escapeHtml(name)}" class="cocktail-image" loading="lazy" />
+        ${photoCredit(cocktail["Image Source"])}
+      </figure>` : ""}
   `;
 
-  const image = $("cocktailDisplay").querySelector(".cocktail-image");
-  if (image) image.addEventListener("error", () => image.remove());
+  const photo = $("cocktailDisplay").querySelector(".photo");
+  if (photo) photo.querySelector("img").addEventListener("error", () => photo.remove());
 
   $("shareBtn").addEventListener("click", () => copyLink(cocktail));
+}
+
+// "Photo: example.com" linking to where the picture came from.
+function photoCredit(source) {
+  if (!hasValue(source)) return "";
+  let host;
+  try {
+    host = new URL(source).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+  return `<figcaption>Photo: <a href="${escapeHtml(source)}" target="_blank" rel="noopener">${escapeHtml(host)}</a></figcaption>`;
 }
 
 function copyLink(cocktail) {
@@ -219,7 +233,7 @@ function setUpIngredientSelect() {
 function setUpNameSearch() {
   const input = $("nameSearch");
   const results = $("nameResults");
-  const normalise = text => text.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const normalise = text => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
   input.addEventListener("input", () => {
     const query = normalise(input.value.trim());
