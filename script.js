@@ -1,5 +1,5 @@
 // Fields in each cocktail that are not ingredients.
-const NON_INGREDIENT_FIELDS = ["Cocktail Name", "Category", "Method", "Image", "Image Source"];
+const NON_INGREDIENT_FIELDS = ["Cocktail Name", "Category", "Method", "Image"];
 const BAR_STORAGE_KEY = "tzuroz-bar:my-bar";
 
 let allCocktails = [];
@@ -66,7 +66,7 @@ function slugify(name) {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
-    .replace(/['’]/g, "")
+    .replace(/['\u2019]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 }
@@ -123,7 +123,7 @@ function renderCard(cocktail) {
     ${hasValue(cocktail.Image) ? `
       <figure class="photo">
         <img src="${escapeHtml(cocktail.Image)}" alt="${escapeHtml(name)}" class="cocktail-image" loading="lazy" />
-        ${photoCredit(cocktail["Image Source"])}
+        ${photoCredit(cocktail.Image)}
       </figure>` : ""}
   `;
 
@@ -133,7 +133,7 @@ function renderCard(cocktail) {
   $("shareBtn").addEventListener("click", () => copyLink(cocktail));
 }
 
-// "Photo: example.com" linking to where the picture came from.
+// "Photo: example.com" linking to the website the picture is hosted on.
 function photoCredit(source) {
   if (!hasValue(source)) return "";
   let host;
@@ -224,7 +224,7 @@ function setUpIngredientSelect() {
     }
     const matches = allCocktails.filter(c => hasValue(c[ingredient]));
     renderResultList(results, matches, "No cocktails found with that ingredient.",
-      c => ` · ${escapeHtml(c[ingredient])}`);
+      c => ` - ${escapeHtml(c[ingredient])}`);
   });
 }
 
@@ -339,5 +339,5 @@ function renderBarResults(bar) {
 
   const missingByName = new Map(missingOne.map(m => [m.cocktail, m.missing]));
   renderResultList($("missingOneList"), missingOne.map(m => m.cocktail), "None.",
-    c => ` · needs <strong>${escapeHtml(missingByName.get(c))}</strong>`);
+    c => ` - needs <strong>${escapeHtml(missingByName.get(c))}</strong>`);
 }
